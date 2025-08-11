@@ -17,23 +17,29 @@ Demo này thiết lập một data pipeline sử dụng Kafka Connect với Debe
 ## Hướng dẫn thử nghiệm
 
 1. **Di chuyển vào thư mục dự án**:
-
+```bash
    cd pg_kafka_connect_mongo_demo
-
+```
 2. **Khởi chạy các dịch vụ**:
-
+```bash
    docker compose up -d --build
+```
 Chờ 1-2 phút để các dịch vụ khởi động.
 - Kiểm tra trạng thái: `docker compose ps`.
 
 3. **Cấu hình pipeline**:
 Chạy các script theo thứ tự:
+
+```bash
 ./1_prepare_postgres.sh
 ./2_create_source_connector.sh
 ./3_create_sink_connector.sh
+```
 
 4. **Thử nghiệm đồng bộ dữ liệu**:
+```bash
 ./4_test_insert_data.sh
+```
 - Script sẽ chèn dữ liệu vào PostgreSQL và kiểm tra trong MongoDB.
 - Dự kiến output hiển thị document JSON trong MongoDB.
 
@@ -41,12 +47,16 @@ Chạy các script theo thứ tự:
 - Truy cập Kafka UI tại `http://localhost:8888` để xem topic `pg-server-01.public.customers` và trạng thái connector.
 - Kiểm tra log Kafka Connect: `docker compose logs connect`.
 - Kiểm tra dữ liệu trong MongoDB thủ công:
+
+```bash
 docker compose exec mongo mongosh
 use synced_db
 db.customers.find().pretty()
-text7. **Dừng hệ thống**:
+```
+7. **Dừng hệ thống**:
+```bash
 docker compose down -v
-
+```
 ## Xử lý lỗi thường gặp
 - **Connector không chạy**: Kiểm tra trạng thái bằng `curl -s http://localhost:8083/connectors/<connector-name>/status | jq .`.
 - **Không có dữ liệu trong topic**: Kiểm tra log PostgreSQL (`docker compose logs postgres`) và đảm bảo `wal_level=logical`.
@@ -59,3 +69,12 @@ docker compose down -v
 - PostgreSQL: 17
 - MongoDB: 8.0
 
+## Kết quả
+
+<img src="result/pg_source.png" alt="postgres source" width="800"/>
+
+<img src="result/kafka.png" alt="kafka" width="800"/>
+
+<img src="result/mongo_sink.png" alt="mongo sink" width="800"/>
+
+<img src="result/test.png" alt="test" width="800"/>

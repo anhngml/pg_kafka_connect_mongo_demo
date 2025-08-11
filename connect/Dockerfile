@@ -1,4 +1,4 @@
-# Sử dụng image cơ sở của Confluent cho Kafka Connect
+# Image cơ sở của Confluent cho Kafka Connect
 FROM confluentinc/cp-kafka-connect:7.9.2
 
 # Cài đặt Debezium PostgreSQL Connector
