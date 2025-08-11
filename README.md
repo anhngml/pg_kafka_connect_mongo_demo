@@ -18,7 +18,7 @@ Demo này thiết lập một data pipeline sử dụng Kafka Connect với Debe
 
 1. **Di chuyển vào thư mục dự án**:
 
-   cd data-pipeline
+   cd pg_kafka_connect_mongo_demo
 
 2. **Khởi chạy các dịch vụ**:
 
